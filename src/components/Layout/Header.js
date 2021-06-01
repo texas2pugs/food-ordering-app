@@ -1,20 +1,20 @@
-import React from 'react';
+import { Fragment } from 'react';
 
 import HeaderCartButton from './HeaderCartButton';
-import eatsImage from '../../assets/vinicius-benedit--1GEAA8q3wk-unsplash.jpg';
-import styles from './Header.module.css';
+import mealsImage from '../../assets/vinicius-benedit--1GEAA8q3wk-unsplash.jpg';
+import classes from './Header.module.css';
 
 const Header = (props) => {
   return (
-    <React.Fragment>
-      <header className={styles.header}>
-        <h1>ReactEats</h1>
+    <Fragment>
+      <header className={classes.header}>
+        <h1>ReactMeals</h1>
         <HeaderCartButton onClick={props.onShowCart} />
       </header>
-      <div className={styles['main-image']}>
-        <img src={eatsImage} alt="Delicious sushi" />
+      <div className={classes['main-image']}>
+        <img src={mealsImage} alt="A table full of delicious food!" />
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
