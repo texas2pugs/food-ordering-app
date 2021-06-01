@@ -7,15 +7,22 @@ import classes from './AvailableMeals.module.css';
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAvailableMeals = async () => {
       setIsLoading(true);
+      setError(null);
+
       const response = await fetch(
         'https://react-test-152b7-default-rtdb.firebaseio.com/meals-available.json'
       );
+
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+
       const data = await response.json();
-      console.log(data);
 
       const loadedMeals = [];
 
@@ -32,7 +39,10 @@ const AvailableMeals = () => {
       setIsLoading(false);
     };
 
-    fetchAvailableMeals();
+    fetchAvailableMeals().catch((error) => {
+      setIsLoading(false);
+      setError(error.message);
+    });
   }, []);
 
   const mealsList = meals.map((meal) => (
@@ -48,7 +58,8 @@ const AvailableMeals = () => {
   return (
     <section className={classes.meals}>
       <Card>
-        {!isLoading && <ul>{mealsList}</ul>}
+        {!isLoading && meals.length > 0 && <ul>{mealsList}</ul>}
+        {!isLoading && error && <p>Something went wrong</p>}
         {isLoading && <p>Loading available meals ...</p>}
       </Card>
     </section>
